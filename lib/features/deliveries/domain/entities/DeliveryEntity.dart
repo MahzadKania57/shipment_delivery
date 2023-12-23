@@ -10,6 +10,16 @@ class DeliveryEntity extends Equatable {
       required this.region,
       required this.address});
 
+  const DeliveryEntity.empty()
+      : this(
+            id: 1,
+            isCod: true,
+            receiverName: "علی محمدی",
+            receiverPhone: '09143657654',
+            city: 'تهران',
+            region: 'دکتر هوشیار',
+            address: 'کوچه عباسی، پلاک 23');
+
   final int id;
   final bool isCod;
   final String receiverName;

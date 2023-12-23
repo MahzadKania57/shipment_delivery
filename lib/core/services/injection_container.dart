@@ -3,8 +3,8 @@ import 'package:shipment_delivery/features/deliveries/data/data_sources/deliveri
 import 'package:shipment_delivery/features/deliveries/data/repositories/deliveries_repository_impl.dart';
 import 'package:shipment_delivery/features/deliveries/domain/repositories/deliveries_repository.dart';
 import 'package:shipment_delivery/features/deliveries/domain/usecases/deliveries_usecases.dart';
-import 'package:shipment_delivery/features/deliveries/presentation/blocs/bloc/deliveries_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:shipment_delivery/features/deliveries/presentation/cubit/deliveries_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -12,7 +12,7 @@ Future<void> init() async {
   sl
 
     //App Logic
-    ..registerFactory(() => DeliveriesBloc(
+    ..registerFactory(() => DeliveriesCubit(
           getDeliveries: sl(),
         ))
 

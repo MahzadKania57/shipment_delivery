@@ -1,4 +1,4 @@
-part of 'deliveries_bloc.dart';
+part of 'deliveries_cubit.dart';
 
 sealed class DeliveriesState extends Equatable {
   const DeliveriesState();

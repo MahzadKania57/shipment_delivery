@@ -12,6 +12,16 @@ class DeliveryModel extends DeliveryEntity {
       required super.region,
       required super.address});
 
+  const DeliveryModel.empty()
+      : this(
+            id: 1,
+            isCod: true,
+            receiverName: "علی محمدی",
+            receiverPhone: '09143657654',
+            city: 'تهران',
+            region: 'دکتر هوشیار',
+            address: 'کوچه عباسی، پلاک 23');
+
   factory DeliveryModel.fromJson(String source) =>
       DeliveryModel.fromMap(jsonDecode(source) as Map<String, dynamic>);
 
