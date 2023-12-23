@@ -1,4 +1,4 @@
-import 'package:shipment_delivery/core/errors/utils/typedef.dart';
+import 'package:shipment_delivery/core/utils/typedef.dart';
 import 'package:shipment_delivery/features/deliveries/domain/entities/DeliveryEntity.dart';
 
 /// DeliveriesRepository is an abstract class defining the contract for operations

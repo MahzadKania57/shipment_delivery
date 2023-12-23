@@ -1,4 +1,4 @@
-import 'package:shipment_delivery/core/errors/utils/typedef.dart';
+import 'package:shipment_delivery/core/utils/typedef.dart';
 import 'package:shipment_delivery/features/deliveries/domain/entities/DeliveryEntity.dart';
 import 'package:shipment_delivery/features/deliveries/domain/repositories/deliveries_repository.dart';
 

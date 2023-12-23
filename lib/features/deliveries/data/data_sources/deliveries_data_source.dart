@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:html';
 
-import 'package:shipment_delivery/core/errors/utils/constants.dart';
+import 'package:shipment_delivery/core/utils/constants.dart';
 import 'package:shipment_delivery/features/deliveries/data/models/delivery_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,7 +21,7 @@ class DeliveriesDataSourceImpl implements DeliveriesDataSource {
     final response = await client.get(
       Uri.http(baseUrl, getConsignmentsEndpoint),
       headers: {
-        "Authorization": token,
+        "Authorization": "Bearer $token",
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
