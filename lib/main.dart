@@ -26,9 +26,11 @@ class MainApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
           textTheme: PersianFonts.vazirTextTheme,
         ),
-        home: BlocProvider(
-          create: (_) => sl<AuthBloc>(),
-          child: const SignInScreen(),
+        home: SafeArea(
+          child: BlocProvider(
+            create: (_) => sl<AuthBloc>(),
+            child: const SignInScreen(),
+          ),
         ));
   }
 }
