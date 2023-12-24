@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shipment_delivery/features/deliveries/presentation/cubit/deliveries_cubit.dart';
+import 'package:shipment_delivery/features/deliveries/presentation/views/delivery_item.dart';
 
 class Deliveries extends StatefulWidget {
-  const Deliveries({super.key});
+  final String token;
+  const Deliveries({super.key, required this.token});
 
   @override
   State<Deliveries> createState() => _DeliveriesState();
 }
 
 class _DeliveriesState extends State<Deliveries> {
-  String token =
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vODIuMTE1LjI2LjE2NDo4MDgwL2FwaS92MS9hdXRoL2xvZ2luIiwiaWF0IjoxNzAzMzY3NTg5LCJleHAiOjE3MDMzNzExODksIm5iZiI6MTcwMzM2NzU4OSwianRpIjoiam9OQWVBcHV1Z3hiUGtKciIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.abOVu9sgeXZTosDOxG9RbNIbxm1rlFVSNIyrztZpLCc";
   void getDeliveries() {
-    context.read<DeliveriesCubit>().getDeliveries(token: token);
+    context.read<DeliveriesCubit>().getDeliveries(token: widget.token);
+  }
+
+  Future<void> _refresh() async {
+    // Simulate a delay for the data to refresh
+    await Future.delayed(Duration(seconds: 1));
+    setState(() {
+      getDeliveries();
+    });
   }
 
   @override
@@ -31,10 +39,6 @@ class _DeliveriesState extends State<Deliveries> {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(state.message),
           behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(
-                10.0), // Adjust the border radius as needed
-          ),
           backgroundColor: Colors.red,
         ));
       }
@@ -50,20 +54,18 @@ class _DeliveriesState extends State<Deliveries> {
                         itemCount: state.deliveries.length,
                         itemBuilder: (context, index) {
                           final delivery = state.deliveries[index];
-                          return Column(
-                            children: [
-                              Text(delivery.id.toString()),
-                              Text(delivery.receiverName),
-                              Text(
-                                  "${delivery.city} ${delivery.region} ${delivery.address}"),
-                              Text(delivery.receiverPhone)
-                            ],
-                          );
+                          return DeliveryItem(delivery: delivery);
                         },
                       ),
                     )
-                  : const Center(
-                      child: Text('Something went wrong!'),
+                  : Center(
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.refresh,
+                          color: Colors.red,
+                        ),
+                        onPressed: _refresh,
+                      ),
                     ));
     });
   }

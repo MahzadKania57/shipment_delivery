@@ -1,4 +1,5 @@
-import 'package:shipment_delivery/features/authentication/domain/entities/userEntity.dart';
+import 'package:shipment_delivery/core/utils/typedef.dart';
+import 'package:shipment_delivery/features/authentication/domain/entities/authEntity.dart';
 
 /// AuthenticationRepository is an abstract class defining the contract for operations
 /// related to data within the domain layer.
@@ -7,5 +8,6 @@ import 'package:shipment_delivery/features/authentication/domain/entities/userEn
 abstract class AuthenticationRepository {
   const AuthenticationRepository();
 
-  Future<User> login();
+  ResultFuture<AuthEntity> login(
+      {required String email, required String password});
 }

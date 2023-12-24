@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:shipment_delivery/features/deliveries/domain/entities/DeliveryEntity.dart';
 
 class DeliveryItem extends StatelessWidget {
-  String? name;
-  bool? isCod;
-  String? mobile;
-  String? city;
-  String? region;
-  String? address;
+  final DeliveryEntity delivery;
 
-  DeliveryItem(
-      {super.key,
-      this.name,
-      this.isCod,
-      this.mobile,
-      this.city,
-      this.region,
-      this.address});
+  const DeliveryItem({super.key, required this.delivery});
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError();
+    return Column(
+      children: [
+        Text(delivery.id.toString()),
+        Text(delivery.receiverName),
+        Text("${delivery.city} ${delivery.region} ${delivery.address}"),
+        Text(delivery.receiverPhone)
+      ],
+    );
   }
 }

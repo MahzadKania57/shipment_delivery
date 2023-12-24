@@ -1,4 +1,9 @@
 import 'package:get_it/get_it.dart';
+import 'package:shipment_delivery/features/authentication/data/data_sources/authentication_data_source.dart';
+import 'package:shipment_delivery/features/authentication/data/repositories/authentication_repository_impl.dart';
+import 'package:shipment_delivery/features/authentication/domain/repositories/authentication_repository.dart';
+import 'package:shipment_delivery/features/authentication/domain/usecases/authentication_usecases.dart';
+import 'package:shipment_delivery/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:shipment_delivery/features/deliveries/data/data_sources/deliveries_data_source.dart';
 import 'package:shipment_delivery/features/deliveries/data/repositories/deliveries_repository_impl.dart';
 import 'package:shipment_delivery/features/deliveries/domain/repositories/deliveries_repository.dart';
@@ -9,24 +14,30 @@ import 'package:shipment_delivery/features/deliveries/presentation/cubit/deliver
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  sl
+  await loginInit();
+  await getDeliveryInit();
+}
 
-    //App Logic
+Future<void> loginInit() async {
+  sl
+    ..registerFactory(() => AuthBloc(signIn: sl()))
+    ..registerLazySingleton(() => AuthenticationUseCase(sl()))
+    ..registerLazySingleton<AuthenticationRepository>(
+        () => AuthenticationRepositoryImpl(sl()))
+    ..registerLazySingleton<AuthenticationDataSource>(
+        () => AuthenticationDataSourceImpl(sl()))
+    ..registerLazySingleton(() => http.Client);
+}
+
+Future<void> getDeliveryInit() async {
+  sl
     ..registerFactory(() => DeliveriesCubit(
           getDeliveries: sl(),
         ))
-
-    //Use Cases
     ..registerLazySingleton(() => DeliveriesUseCase(sl()))
-
-    //Repositories
     ..registerLazySingleton<DeliveriesRepository>(
         () => DeliveriesRepositoryImpl(sl()))
-
-    //Data Sources
     ..registerLazySingleton<DeliveriesDataSource>(
         () => DeliveriesDataSourceImpl(sl()))
-
-    //External Dependencies
     ..registerLazySingleton(() => http.Client());
 }
