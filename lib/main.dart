@@ -22,9 +22,10 @@ class MainApp extends StatelessWidget {
         title: "Shipment Delivery",
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            useMaterial3: true,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-            textTheme: PersianFonts.vazirTextTheme),
+          useMaterial3: true,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          textTheme: PersianFonts.vazirTextTheme,
+        ),
         home: BlocProvider(
           create: (_) => sl<AuthBloc>(),
           child: const SignInScreen(),

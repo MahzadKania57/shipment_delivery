@@ -27,69 +27,105 @@ class SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Text('Login'),
-        ),
-        body: BlocConsumer<AuthBloc, AuthState>(
-          listener: (_, state) {
-            if (state is SignInError) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(state.message),
-                behavior: SnackBarBehavior.floating,
-                backgroundColor: Colors.red,
-              ));
-            } else if (state is SignedIn) {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => BlocProvider(
-                        create: (context) => sl<DeliveriesCubit>(),
-                        child: Deliveries(token: state.auth.token)),
-                  ));
-            }
-          },
-          builder: (context, state) {
-            return Padding(
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(),
+          body: BlocConsumer<AuthBloc, AuthState>(
+            listener: (_, state) {
+              if (state is SignInError) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(state.message),
+                  behavior: SnackBarBehavior.floating,
+                  backgroundColor: Colors.red,
+                ));
+              } else if (state is SignedIn) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BlocProvider(
+                          create: (context) => sl<DeliveriesCubit>(),
+                          child: Deliveries(token: state.auth.token)),
+                    ));
+              }
+            },
+            builder: (context, state) {
+              return Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: SingleChildScrollView(
-                    child: Center(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      const SizedBox(height: 100),
-                      TextFormField(
-                        controller: emailController,
-                        decoration: const InputDecoration(
-                          labelText: 'Email',
-                          border: OutlineInputBorder(),
+                    children: [
+                      // Image
+                      Image.asset(
+                        'assets/images/chapar.png',
+                        height: 200,
+                        width: 200,
+                      ),
+                      // Email input field
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: TextField(
+                          controller: emailController,
+                          decoration: const InputDecoration(
+                            labelText: 'پست الترونیکی',
+                            prefixIcon: Icon(
+                              Icons.email,
+                              color: Colors.red,
+                            ),
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 50),
-                      TextFormField(
-                        controller: passwordController,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          labelText: 'Password',
-                          border: OutlineInputBorder(),
+                      // Password input field
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: TextField(
+                          controller: passwordController,
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            labelText: 'رمز عبور',
+                            prefixIcon: Icon(
+                              Icons.lock,
+                              color: Colors.blue,
+                            ),
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 50),
-                      ElevatedButton(
-                        onPressed: () {
-                          final email = emailController.text;
-                          final password = passwordController.text;
-                          context.read<AuthBloc>().add(LogInEvent(
-                              email: email.trim(), password: password.trim()));
-                        },
-                        child: const Text('Login'),
+                      // Login button
+                      const SizedBox(
+                        height: 100,
                       ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width *
+                            0.7, // Set the width to match the parent's width
+                        height: 50,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            final email = emailController.text;
+                            final password = passwordController.text;
+                            context.read<AuthBloc>().add(LogInEvent(
+                                email: email.trim(),
+                                password: password.trim()));
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Color(0xFF31569A),
+                            onPrimary: Colors.white,
+                          ),
+                          child: const Text(
+                            'ورود',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 23,
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
-                )));
-          },
-        ));
+                ),
+              );
+            },
+          )),
+    );
   }
 }

@@ -43,30 +43,33 @@ class _DeliveriesState extends State<Deliveries> {
         ));
       }
     }, builder: (context, state) {
-      return Scaffold(
-          body: state is GettingDeliveries
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : state is DeliveriesLoaded
-                  ? Center(
-                      child: ListView.builder(
-                        itemCount: state.deliveries.length,
-                        itemBuilder: (context, index) {
-                          final delivery = state.deliveries[index];
-                          return DeliveryItem(delivery: delivery);
-                        },
-                      ),
-                    )
-                  : Center(
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.refresh,
-                          color: Colors.red,
+      return Directionality(
+        textDirection: TextDirection.rtl,
+        child: Scaffold(
+            body: state is GettingDeliveries
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : state is DeliveriesLoaded
+                    ? Center(
+                        child: ListView.builder(
+                          itemCount: state.deliveries.length,
+                          itemBuilder: (context, index) {
+                            final delivery = state.deliveries[index];
+                            return DeliveryItem(delivery: delivery);
+                          },
                         ),
-                        onPressed: _refresh,
-                      ),
-                    ));
+                      )
+                    : Center(
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.refresh,
+                            color: Colors.red,
+                          ),
+                          onPressed: _refresh,
+                        ),
+                      )),
+      );
     });
   }
 }
